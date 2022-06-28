@@ -32,16 +32,12 @@ notes.post('/', (req, res) => {
 
 // DELETE Route for a note
 notes.delete('/:id', (req, res) => {
-  console.log(req.params);
     const noteId = req.params.id;
     readFromFile('./db/db.json')
       .then((data) => JSON.parse(data))
       .then((json) => {
-        console.log(noteId);
         
         const deleteNote = json.filter((note) => note.id !== noteId);
-
-        
         
         writeToFile('./db/db.json', deleteNote);
   
