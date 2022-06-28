@@ -17,17 +17,38 @@ notes.post('/', (req, res) => {
   const { title, text } = req.body;
 
   if (req.body) {
-    const newTip = {
+    const newNote = {
       title,
       text,
-      note_id: uuidv4(),
+      id: uuidv4(),
     };
 
-    readAndAppend(newTip, './db/db.json');
+    readAndAppend(newNote, './db/db.json');
     res.json(`note added successfully 🚀`);
   } else {
     res.error('Error in adding a note');
   }
 });
+
+// DELETE Route for a note
+notes.delete('/:id', (req, res) => {
+  console.log(req.params);
+    const noteId = req.params.id;
+    readFromFile('./db/db.json')
+      .then((data) => JSON.parse(data))
+      .then((json) => {
+        console.log(noteId);
+        
+        const deleteNote = json.filter((note) => note.id !== noteId);
+
+        
+        
+        writeToFile('./db/db.json', deleteNote);
+  
+       
+        res.json(`Item ${noteId} has been deleted 🗑️`);
+      });
+  });
+  
 
 module.exports = notes;
