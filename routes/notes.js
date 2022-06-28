@@ -6,6 +6,8 @@ const {
   writeToFile,
 } = require('../helpers/fsUtils');
 
+
+// GET Route for taking a note
 notes.get('/', (req, res) => {
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
   });
